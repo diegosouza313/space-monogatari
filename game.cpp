@@ -28,14 +28,18 @@ void inicializa_jogo (Jogo* jogo, int largura, int altura) {
   desenha_fundo_jogo();
   inicializa_player(&jogo->player, jogo->largura/2.0, jogo->altura/12.0*10);
   inicializa_tropa(jogo->alien, jogo->largura/10, jogo->altura/12);
+  inicializa_nave(&jogo->nave);
   inicializa_timer_jogo(jogo);
   inicializa_teclado(jogo);
   inicializa_event_queue_jogo(jogo);
+
+  jogo->segundos=0;
+
 }
 	
 void finaliza_jogo (Jogo* jogo) {
 	finaliza_player (&jogo->player);
-	
+	finaliza_nave(&jogo->nave);
 	al_destroy_display(jogo->display);
 }
 
@@ -44,7 +48,9 @@ void desenha_jogo (Jogo* jogo) {
 
 	desenha_player(&jogo->player);
 
-  desenha_tropa(jogo->alien);
+    desenha_tropa(jogo->alien);
+
+    desenha_nave(&jogo->nave,jogo, jogo->projetil_stack);
 
   for (int i = 0; i < jogo->numero_de_projeteis; i++) {
 
@@ -77,6 +83,9 @@ void loop_de_jogo (Jogo* jogo) {
 		al_wait_for_event(jogo->event_queue, &ev);
 
 		if (ev.type == ALLEGRO_EVENT_TIMER) {
+
+			jogo->segundos++;
+
 
         	if (jogo->key[KEY_LEFT] && get_posicao_x_min_player(&jogo->player) > 0 + 15)
             	move_player(&jogo->player, ESQUERDA);
