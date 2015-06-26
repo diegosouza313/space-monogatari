@@ -4,6 +4,7 @@
 #include "alien.h"
 #include "player.h"
 #include "projetil.h"
+#include "nave_mae.h"
 #include "menu.h"
 
 #define N_KEYS 4
@@ -19,11 +20,13 @@ struct Jogo {
 
 	Player player;
 	Alien alien[COLUNAS_TROPA][LINHAS_TROPA];
+	NaveMae nave;
 
 	Menu menu;
 
 	Projetil projetil_stack[50];
 	int numero_de_projeteis;
+	int segundos;
 };
 
 void inicializa_jogo (Jogo* jogo, int largura, int altura);
