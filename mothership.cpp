@@ -33,6 +33,7 @@ void inicializa_mothership(Mothership *mothership){
 	}
 	mothership->fonte = al_load_font("resources/verdana.ttf",10,0);
 	mothership->velocidade=3;
+	mothership->frequencia=10;
 	mothership->largura=27;
 	mothership->altura=19;
 	reinicia_mothership(mothership);
@@ -63,10 +64,11 @@ void detecta_colisao(Mothership *mothership, Jogo *jogo){
 
 }
 int autoriza_mothership(Mothership *mothership, Jogo *jogo){
-	if(((jogo->loop_count)/FPS)%3 == 0 && mothership->status == 0 && jogo->loop_count%FPS==0){
+	if(((jogo->loop_count)/FPS)%mothership->frequencia == 0 && mothership->status == 0 && jogo->loop_count%FPS==0){
 		mothership->status=1;
 		return 1;
 	}
 	else
 		return 0;
 }
+
