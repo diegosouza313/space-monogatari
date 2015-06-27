@@ -31,9 +31,10 @@ void inicializa_mothership(Mothership *mothership){
 			puts("Erro ao carregar o arquivo resources/mothership.png");
 			exit(0);
 	}
+	mothership->fonte = al_load_font("resources/verdana.ttf",10,0);
 	mothership->velocidade=3;
-	mothership->largura=35;
-	mothership->altura=35;
+	mothership->largura=27;
+	mothership->altura=19;
 	reinicia_mothership(mothership);
 }
 void finaliza_mothership(Mothership *mothership){
@@ -41,13 +42,18 @@ void finaliza_mothership(Mothership *mothership){
 }
 void detecta_colisao(Mothership *mothership, Jogo *jogo){
 	for (int i = 0; i < jogo->numero_de_projeteis; i++) {
-
 		if(!(jogo->projetil_stack[i].posicao_x > mothership->posicao_x + mothership->largura ||
-				jogo->projetil_stack[i].posicao_y > mothership->posicao_y + mothership->altura  ||
-				jogo->projetil_stack[i].posicao_y + jogo->projetil_stack[i].altura_sprite< mothership->posicao_y ||
-				jogo->projetil_stack[i].posicao_x + jogo->projetil_stack[i].largura_sprite < mothership->posicao_x))
-		{
+						jogo->projetil_stack[i].posicao_y > mothership->posicao_y + mothership->altura  ||
+						jogo->projetil_stack[i].posicao_y + 16 < mothership->posicao_y ||
+						jogo->projetil_stack[i].posicao_x + 8 < mothership->posicao_x)
+						)
 
+		{
+				copy_projetil(&jogo->projetil_stack[i], &jogo->projetil_stack[jogo->numero_de_projeteis-1]);
+				desenha_projetil(&jogo->projetil_stack[i]);
+				finaliza_projetil(&jogo->projetil_stack[jogo->numero_de_projeteis-1]);
+				jogo->numero_de_projeteis--;
+				al_draw_text(mothership->fonte,al_map_rgb(211,211,211), mothership->posicao_x, mothership->posicao_y + 25, 0, "+500");
 				reinicia_mothership(mothership);
 
 				return ;
