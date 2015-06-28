@@ -92,6 +92,11 @@ void loop_de_jogo (Jogo* jogo) {
   while (!doexit) {
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(jogo->event_queue, &ev);
+		
+/* AQUI VAO FICAR OS TESTES DE COLISAO */
+/*---------------------------------------------------------------*/
+		colisao_mothership_vs_projetil(jogo);
+/*---------------------------------------------------------------*/
 
 		if (ev.type == ALLEGRO_EVENT_TIMER) {
         	if (jogo->key[KEY_LEFT] && get_posicao_x_min_player(&jogo->player) > 0 + 15)
