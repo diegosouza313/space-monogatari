@@ -39,7 +39,7 @@ void inicializa_jogo (Jogo* jogo) {
   
   inicializa_player(&jogo->player, jogo->largura/2.0, jogo->altura/12.0*10);
   inicializa_tropa(jogo->alien, jogo->largura/10, jogo->altura/12);
-  inicializa_mothership(&jogo->mothership, jogo);
+  inicializa_mothership(&jogo->mothership,jogo);
   inicializa_hud(&jogo->hud);
   
   inicializa_tropa(jogo->alien, ((jogo->largura - 20) - (1.5*largura_aliens*COLUNAS_TROPA - largura_aliens/2)) / 2 , 1.5*altura_aliens);
@@ -57,7 +57,7 @@ void desenha_jogo (Jogo* jogo) {
 	desenha_fundo_jogo(jogo);
 	desenha_player(&jogo->player);
   desenha_tropa(jogo->alien);
-  desenha_mothership(&jogo->mothership,jogo, jogo->projetil_stack);
+  desenha_mothership(&jogo->mothership);
   desenha_hud(&jogo->hud);
 
   for (int i = 0; i < jogo->numero_de_projeteis; i++) {
@@ -82,7 +82,6 @@ void loop_de_jogo (Jogo* jogo) {
 	bool redraw = true;
 
 	jogo->numero_de_projeteis = 0;
-  jogo->loop_count = 0;
   jogo->loop_count_projetil = jogo->player.projetil_cooldown;
   jogo->loop_count_menu_pause = 1;
   jogo->menu.new_game = 0;
@@ -172,7 +171,6 @@ void loop_de_jogo (Jogo* jogo) {
 
           jogo->loop_count_projetil++;
           jogo->key[KEY_ESCAPE] = false;
-          jogo->loop_count++;
           jogo->loop_count_menu_pause++;
           jogo->loop_alien_movement++;
           jogo->loop_alien_shots++;
