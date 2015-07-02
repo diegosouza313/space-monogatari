@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
     // TITLE SCREEN
 	tela_boot_jogo(&jogo);
 
-	inicializa_menus(&jogo.menu);
+	inicializa_menus(&jogo.menu, &jogo.hud);
 
 	loop_menu(&jogo.menu, &jogo.hud, TITLE_SCREEN);
 
